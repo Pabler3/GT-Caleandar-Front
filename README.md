@@ -8,8 +8,6 @@ sucesivas o puntuales y cuyo aviso llegue al Email.
 ## **Tecnologías Usadas**
 
 * Astro
-* Tailwind CSS
-* Librerías
 
 ## **Instalación**
 
