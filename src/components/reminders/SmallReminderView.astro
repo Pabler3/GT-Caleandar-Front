@@ -1,0 +1,121 @@
+---
+export interface Props {
+  status:string;
+  taskName:string;
+  numberParticipants:number;
+  hourTask:string;
+}
+
+const { status, taskName, numberParticipants, hourTask } = Astro.props;
+
+---
+<div class="small-reminder">
+  <div class="content-reminder">
+    <div class="header-view">
+      <div class="status-circle"></div>
+      <p class="status-text">{status}</p>
+    </div>
+
+    <div class="task-name">
+      <h3>{taskName}</h3>
+    </div>
+    <div class="task-details">
+      <div class="time-reminder">
+        <img class="clock-icon" alt="icono de un reloj" src="icons/icon-clock.svg">
+        <div class="hour">{hourTask}</div>
+      </div>
+      <div class="participants">
+        <img class="participants-icon" alt="icono de usuarios o participantes" src="icons/icon-users.svg">
+        <div class="number-participants">{numberParticipants}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" is:inline src="/src/utils/validationViewReminder.js"></script>
+
+<style>
+  .small-reminder {
+    width: 300px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fefefe;
+    border-radius: 16px;
+    border: 1px solid rgb(185, 203, 206);
+  }
+  .content-reminder {
+    width: 90%;
+    height: 90%;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    margin: 20px;
+  }
+  .header-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+  .status-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #F0DB68;
+    margin-right: 60px;
+  }
+  .status-text {
+    font-size: 18px;
+    color: #D65D63;
+    font-weight: 600;
+    margin-left: 60px;
+  }
+  .task-name h3 {
+    font-size: 19px;
+    color: #2b9eaf;
+    margin-bottom: 0;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+  }
+  .task-name {
+    font-size: 16px;
+    color: #9bb0b3;
+    margin-top: 0;
+    letter-spacing: 0.8px;
+  }
+  .task-details {
+    margin: 0 auto;
+    display: flex;
+    border: none;
+    border-radius: 10px;
+    padding: 4px;
+    gap: 40px;
+  }
+  .participants {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-left: 30px;
+  }
+  .time-reminder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-right: 30px;
+  }
+  .hour,
+  .number-participants {
+    color: #2b9eaf;
+    font-size: 18px;
+    font-weight: 400;
+  }
+</style>

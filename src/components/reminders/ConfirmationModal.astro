@@ -1,0 +1,48 @@
+---
+---
+<div class="modal-confirmation" id="myModal" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal-content-confirmation">
+    <h1 id="modalTitle" class="modal-text" aria-label="Cerrar">
+      ¡Recordatorio creado! No olvidaremos avisarte!
+    </h1>
+    <img src="/images/image-confirmation.svg" alt="imagen de confirmación" class="img-confirmation" />
+  </div>
+</div>
+
+<script type="module" is:inline src="/src/services/handleFormSubmit.js"></script>
+
+<style>
+  .modal-confirmation {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-confirmation.is-active {
+    display: flex;
+  }
+  .modal-content-confirmation {
+    background: #fefefe;
+    border-radius: 16px;
+    width: 592px;
+    box-shadow: 0px 1px 2px 0px rgba(41, 79, 84, 0.21);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 24px; 
+  }
+  .modal-text {
+    color: var(--color-text-alt);
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .img-confirmation {
+    width: 244px;
+    height: 210px;
+  }
+</style>

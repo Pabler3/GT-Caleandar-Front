@@ -1,0 +1,69 @@
+---
+import HomeLayout from "../layouts/HomeLayout.astro";
+import NewReminderButton, { Width } from "../components/shared/NewReminderButton.astro";
+import BigCalendar from "../components/reminders/BigCalendar.astro";
+---
+
+<HomeLayout title="Reminders - LeanMind">
+  <div class="reminder__container">
+    <section class="reminder-header__section">
+      <div class="reminder-top-header">
+        <div class="reminder-text__container">
+          <h1>Calendario</h1>
+          <span>Aquí puedes ver todos tus recordatorios del mes</span>
+        </div>
+        <NewReminderButton width={Width.SMALL} bold={false} dark={false} height={36} />
+      </div>
+    </section>
+
+    <section class="reminder-body__section">
+      <div class="reminder-body-header">
+        <div class="reminder-body-controls">
+          <div class="arrow-buttons">
+            <button id="prev-button"><img src="./icons/arrow-left.svg" alt="arrow-left-icon"></button>
+            <button id="next-button"><img src="./icons/arrow-right.svg" alt="arrow-right-icon"></button>
+          </div>
+          <button class="yesterday-button" id="yesterday-button"></button>
+          <div class="full-control">
+            <span></span>
+            <span id="current-month"></span>
+            <div class="full-control-right">
+              <div class="arrow-buttons">
+                <button><img src="./icons/arrow-left.svg" alt="arrow-left-icon"></button>
+                <button><img src="./icons/arrow-right.svg" alt="arrow-right-icon"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reminder-body">
+        <BigCalendar />
+      </div>
+    </section>
+  </div>
+</HomeLayout>
+
+<script>
+  
+  import { currentDateState, currentMonthState } from '../stores/store'
+
+  const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  const prevButton = document.getElementById('prev-button') as HTMLButtonElement
+  const nextButton = document.getElementById('next-button') as HTMLButtonElement
+  const currentMonth = document.getElementById('current-month') as HTMLElement
+  const currentYear = document.getElementById('yesterday-button') as HTMLElement
+
+  prevButton.addEventListener('click',()=>{
+    currentMonthState.set(currentMonthState.get() - 1)
+  })
+
+  nextButton.addEventListener('click',()=>{
+    currentMonthState.set(currentMonthState.get() + 1)
+  })
+
+  currentMonthState.subscribe(()=>{
+    currentYear.textContent = currentDateState.get().getFullYear().toString();
+    currentMonth.textContent = monthNames[currentMonthState.get()]
+  })
+</script>

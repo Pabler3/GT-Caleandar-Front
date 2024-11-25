@@ -1,0 +1,247 @@
+---
+import HomeLayout from "../layouts/HomeLayout.astro";
+import NewReminderButton, { Width } from "../components/shared/NewReminderButton.astro";
+import SmallReminderView from "../components/reminders/SmallReminderView.astro";
+// import BigReminderView from "../components/reminders/BigReminderView.astro";
+import ConfirmationModal from "../components/reminders/ConfirmationModal.astro";
+import data from "../static/js/dataTarea.json";
+
+const tareas = data.tareas;
+
+---
+<HomeLayout title="Reminders - LeanMind">
+  <div class="reminder__container">
+    <section class="reminder-header__section">
+      <div class="reminder-top-header">
+        <div class="reminder-text__container">
+          <h1>Mis Recordatorios</h1>
+          <span>Que no se te pase ninguna tarea</span>
+        </div>
+        <NewReminderButton width={Width.SMALL} bold={false} dark={false} height={36} />
+      </div>
+      <div class="reminder-bottom-header">
+        <div class="reminder-bottom-header-left">
+          <button class="filter-button active" data-filter="todas">
+            <img src="./icons/eye.svg" class="icon" alt="boxes-icon">Todo
+          </button>
+          <button class="filter-button" data-filter="pendiente">
+            <img src="./icons/icon-clock.svg" class="icon" alt="boxes-icon">Pendiente
+          </button>
+          <button class="filter-button" data-filter="completada">
+            <img src="./icons/checklist.svg" class="icon" alt="boxes-icon">Completado
+          </button>
+          <button class="filter-button" data-filter="archivada">
+            <img src="./icons/icon-archive.svg" class="icon" alt="boxes-icon">Archivado
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="reminder-body__section">
+      <div class="reminder-body-header">
+        <div class="reminder-body-controls">
+          <div class="arrow-buttons">
+            <button id="prev-button"><img src="./icons/arrow-left.svg" alt="arrow-left-icon"></button>
+            <button id="next-button"><img src="./icons/arrow-right.svg" alt="arrow-right-icon"></button>
+          </div>
+          <button class="yesterday-button" id="yesterday-button"></button>
+          <div class="full-control">
+            <span></span>
+            <span id="current-month"></span>
+            <div class="full-control-right">
+              <div class="arrow-buttons">
+                <button><img src="./icons/arrow-left.svg" alt="arrow-left-icon"></button>
+                <button><img src="./icons/arrow-right.svg" alt="arrow-right-icon"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reminder-body">
+        <ConfirmationModal />
+        <div class="paginate-items">
+          <ul id="paginated-list" data-current-page="1" aria-live="polite">
+            <!-- <BigReminderView /> -->
+            <div id="tareas-container" class="parent">
+              {
+                tareas.length > 0 ? 
+                  (tareas.map((tarea) => (
+                   (
+                    <li data-estado={tarea.estado}>
+                      <SmallReminderView
+                        key={tarea.id}
+                        taskName={tarea.titulo}
+                        status={tarea.estado}
+                        numberParticipants={tarea.email_responsables?.length || 0}
+                        hourTask={tarea.hora}
+                      />
+                    </li>
+                  )))
+                ) : 
+                (alert("No tienes tareas para mostrar"))
+              }
+            </div>
+          </ul>
+         
+        </div>
+      </div>
+    </section>
+  </div>
+</HomeLayout>
+
+<script type="module" is:client>
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js';
+  import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js';
+
+ const firebaseConfig = {
+    apiKey: import.meta.env.PUBLIC_API_KEY,
+    authDomain: import.meta.env.PUBLIC_AUTH_DOMAIN,
+    databaseURL: import.meta.env.PUBLIC_DATABASE_URL,
+    projectId: import.meta.env.PUBLIC_PROJECT_ID,
+    storageBucket: import.meta.env.PUBLIC_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.PUBLIC_MESSAGING_SENDER_ID,
+    appId: import.meta.env.PUBLIC_APP_ID,
+    measurementId: import.meta.env.PUBLIC_MEASUREMENT_ID
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  let tareasValue = [];
+  let currentPage = 1;
+  const tasksPerPage = 6;
+
+  const fetchTareas = async (userId, page) => {
+    try {
+      const response = await fetch(
+        `https://us-central1-caleandar-leanmind.cloudfunctions.net/getTasksByUserId=${userId}`,
+        {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+      const data = await response.json();
+      console.log('Tareas obtenidas del backend:', data);
+
+      tareasValue = data.tasks || [];
+
+      const startIndex = (page - 1) * tasksPerPage;
+      const paginatedTasks = tareasValue.slice(startIndex, startIndex + tasksPerPage);
+
+      // Llama a Astro para actualizar el estado de las tareas
+      const tareasContainer = document.querySelector('.parent');
+      tareasContainer.innerHTML = ''; // Limpiar contenedor
+
+      if (paginatedTasks.length > 0) {
+        paginatedTasks.forEach((tarea) => {
+          const reminder = document.createElement('div');
+          reminder.innerHTML = `
+            <div>
+              <h3>${tarea.titulo}</h3>
+              <p>Estado: ${tarea.estado}</p>
+              <p>Participantes: ${tarea.email_responsables?.length || 0}</p>
+              <p>Hora: ${tarea.hora}</p>
+            </div>
+          `;
+          tareasContainer.appendChild(reminder);
+        });
+      } else {
+        tareasContainer.innerHTML = '<p>No tienes tareas por mostrar.</p>';
+      }
+
+      // Habilitar/Deshabilitar botones de paginación
+      document.getElementById('prevBtn').disabled = currentPage === 1;
+      document.getElementById('nextBtn').disabled = currentPage * tasksPerPage >= tareasValue.length;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Lógica de paginación
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          fetchTareas(user.uid, currentPage);
+        }
+      });
+    }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    currentPage++;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchTareas(user.uid, currentPage);
+      }
+    });
+  });
+
+  // Observador de autenticación
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log('Usuario autenticado:', user.uid);
+      fetchTareas(user.uid, currentPage);
+    } else {
+      console.error('Usuario no autenticado');
+      window.location.href = '/login';
+    }
+  });
+</script>
+
+<script type="module" is:inline src="/src/utils/paginationScript.js"></script>
+<script type="module" is:inline src="/src/utils/filterTasks.js"></script>
+
+<script>  
+
+import { currentDateState, currentMonthState } from '../stores/store'
+
+  const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  const prevButton = document.getElementById('prev-button') as HTMLButtonElement
+  const nextButton = document.getElementById('next-button') as HTMLButtonElement
+  const currentMonth = document.getElementById('current-month') as HTMLElement
+  const currentYear = document.getElementById('yesterday-button') as HTMLElement
+
+  prevButton.addEventListener('click',()=>{
+    currentMonthState.set(currentMonthState.get() - 1)
+  })
+
+  nextButton.addEventListener('click',()=>{
+    currentMonthState.set(currentMonthState.get() + 1)
+  })
+
+  currentMonthState.subscribe(()=>{
+    currentYear.textContent = currentDateState.get().getFullYear().toString();
+    currentMonth.textContent = monthNames[currentMonthState.get()]
+  })
+
+</script>
+
+<style>
+  .paginate-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .parent {
+    display: grid;
+    grid-template-columns:
+    repeat(3, 1fr);
+    grid-template-rows:
+    repeat(3, 1fr);
+    gap: 30px;
+  }
+  .hidden {
+    display: none;
+  }
+  ul {
+    list-style-type: none;
+  }
+ 
+</style>

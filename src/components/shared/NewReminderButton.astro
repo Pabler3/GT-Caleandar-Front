@@ -1,0 +1,62 @@
+---
+export enum Width{
+  FULL = 'full',
+  MEDIUM = 'medium',
+  SMALL = 'small'
+}
+
+interface Props{
+  width: Width;
+  dark:boolean;
+  bold:boolean;
+  height:number;
+}
+
+const { width , dark, bold, height } = Astro.props
+---
+
+<button 
+  id="new-reminder" 
+  class="card__container-button new-reminder" 
+  style={
+    `--button-color: ${dark ? 'var(--bg-color-dark)' : 'var(--bg-color-primary-alt)'};
+     --button-weight: ${bold ? '600' : '500'};
+     --button-width: ${width==Width.FULL ? '100%' : width==Width.MEDIUM ? 'auto':'auto'};
+     --button-padding: ${width==Width.FULL ? '12px 16px' : width==Width.MEDIUM ? '16px 24px':'5px 8px'};
+     --button-font-size: ${width==Width.FULL ? '16px' : width==Width.MEDIUM ? '14px':'12px'};
+     --button-height: ${height}px;
+    `
+  }>
+  <img src="./icons/plus-white.svg" alt="new-reminder" />
+
+  <span>Crear Recordatorio</span>
+
+</button>
+
+<style>
+   .card__container-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: var(--button-padding);
+    width: var(--button-width);
+    font-size: var(--button-font-size);
+    gap: 8px;
+    height: var(--button-height, auto);
+    background: #1F636B;
+    font-weight: var(--button-weight, 500);
+    color: #FAFAFA;
+    border-radius: 8px;
+    flex: none;
+    order: 0;
+    font-family: var(--font-monserrat);
+    align-self: stretch;
+    flex-grow: 0;
+    cursor: pointer;
+    border: none;
+  }
+  .card__container-button:hover {
+    opacity: 0.9;
+  }
+</style>

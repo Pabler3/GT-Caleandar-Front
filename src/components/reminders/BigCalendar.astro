@@ -1,0 +1,111 @@
+<div class="big-calendar">
+  <div class="big-calendar-weekdays">
+      <div>Lunes</div>
+      <div>Martes</div>
+      <div>Miércoles</div>
+      <div>Jueves</div>
+      <div>Viernes</div>
+      <div>Sábado</div>
+      <div>Domingo</div>
+  </div>
+  <div class="big-calendar-days" id="calendarDays"></div>
+</div>
+
+<script>
+  import { currentDateState, currentMonthState } from '../../stores/store'
+  const calendarDays = document.getElementById('calendarDays') as HTMLElement;
+
+  let currentDate = currentDateState.get();
+  let events:any[] = [];
+
+  // async function fetchEvents(year:number, month:number) {
+  //     try {
+  //         const response = await fetch(`https://api.example.com/events?year=${year}&month=${month}`);
+  //         if (!response.ok) {
+  //             throw new Error('Network response was not ok');
+  //         }
+  //         events = await response.json();
+  //     } catch (error) {
+  //         console.error('Error fetching events:', error);
+  //         events = [];
+  //     }
+  // }
+
+  function getEventsForDate(date:Date) {
+      return events.filter(event => {
+          const eventDate = new Date(event.date);
+          return eventDate.getDate() === date.getDate() &&
+                 eventDate.getMonth() === date.getMonth() &&
+                 eventDate.getFullYear() === date.getFullYear();
+      });
+  }
+
+  async function generateCalendar(year:number, month:number) {
+      // await fetchEvents(year, month);
+      calendarDays.innerHTML = '';
+      
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+
+      const firstDayIndex = (firstDay.getDay() + 6) % 7;
+      for (let i = firstDayIndex; i > 0; i--) {
+          const prevDate = new Date(year, month, 1 - i);
+          addDayToCalendar(prevDate, true);
+      }
+
+      for (let i = 1; i <= lastDay.getDate(); i++) {
+          const date = new Date(year, month, i);
+          addDayToCalendar(date);
+      }
+  }
+
+  function addDayToCalendar(date:Date, inactive:boolean = false) {
+      const dayElement = document.createElement('div');
+      dayElement.classList.add('big-calendar-day');
+      if (inactive) dayElement.classList.add('inactive');
+      if (date.getDay() === 7 || date.getDay() === 0) dayElement.classList.add('big-calendar-weekend');
+
+      const dateElement = document.createElement('div');
+      dateElement.classList.add('big-calendar-date');
+      dateElement.textContent = date.getDate().toString();
+      dayElement.appendChild(dateElement);
+
+      const dayEvents = getEventsForDate(date);
+      dayEvents.forEach(event => {
+          const eventElement = document.createElement('div');
+          eventElement.classList.add('big-calendar-event');
+          eventElement.textContent = event.title;
+          dayElement.appendChild(eventElement);
+
+          const timeElement = document.createElement('div');
+          timeElement.classList.add('big-calendaer-event-time');
+          timeElement.textContent = event.time;
+          dayElement.appendChild(timeElement);
+
+          if (event.participants) {
+              const participantsElement = document.createElement('div');
+              participantsElement.classList.add('big-calendar-participants');
+              participantsElement.textContent = `${event.participants} particip.`;
+              dayElement.appendChild(participantsElement);
+          }
+      });
+
+      dayElement.addEventListener('click', () => {
+          document.querySelectorAll('.big-calendar-day').forEach(d => d.classList.remove('selected'));
+          dayElement.classList.add('selected');
+      });
+
+      calendarDays.appendChild(dayElement);
+  }
+
+  async function updateCalendar() {
+      await generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+  }
+
+  currentMonthState.subscribe(()=>{
+      currentDate.setMonth(currentMonthState.get())
+      updateCalendar()
+  })
+
+  updateCalendar();
+</script>

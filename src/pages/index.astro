@@ -1,10 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+export const prerender = false;
+
+return Astro.redirect('/login');
 ---
 
 <Layout title="CaLEANdar">
 	<main>
-		<h1>Lean Mind</h1>
+		<!-- <h1>Lean Mind</h1> -->
 	</main>
 </Layout>
 
@@ -16,6 +20,7 @@ import Layout from '../layouts/Layout.astro';
 		max-width: calc(100% - 2rem);
 		font-size: 20px;
 		line-height: 1.6;
+    overflow: hidden;
 	}
 	h1 {
 		font-size: 4rem;

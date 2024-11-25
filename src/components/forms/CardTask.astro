@@ -1,0 +1,674 @@
+---
+
+---
+
+<div class="modal" aria-modal="true" role="dialog" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <div class="header-form">
+      <h1 id="modalTitle" class="modal-title" aria-label="Cerrar">
+        Crear Recordatorio
+      </h1>
+      <button id="closeBtn" class="close-btn" aria-label="Cerrar">
+        <img src="/icons/icon-close.svg" alt="Cerrar" class="icon" />
+      </button>
+    </div>
+    <form id="taskForm" class="form-content">
+      <div class="form-group-details">
+        <div class="form-group-title">
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="input-title"
+            required
+            placeholder="Titulo Recordatorio"
+          />
+          <span class="error" id="titleError"></span>
+        </div>
+        <div class="form-group-calendar">
+          <label for="day" class="label">
+            <img
+              src="/icons/icon-calendar.svg"
+              alt="Calendario icono"
+              class="icon"
+            /> Fecha
+          </label>
+          <div class="custom-date-picker">
+            <input
+              type="date"
+              id="dayStar"
+              name="dayStar"
+              class="input-date"
+              required
+            />
+            <input
+              type="date"
+              id="dayEnd"
+              name="dayEnd"
+              class="input-date"
+            />
+          </div>
+          <div class="text-date">
+            <span id="start"> Inicio</span>
+            <span id="end"> Fin (Opcional)</span>
+          </div>
+          <div class="form-group-time">
+            <label for="starTime" class="label-time">
+              <img
+                src="/icons/icon-clock.svg"
+                alt="Repite icono"
+                class="icon"
+              /> Hora Inicio
+            </label>
+            <div class="custom-time-picker">
+              <input
+                type="time"
+                id="starTime"
+                name="starTime"
+                class="input-time"
+                required
+              />
+            </div>
+            <span class="error" id="hourError"></span>
+          </div>
+          <span class="error" id="dayError"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="participant" class="label-participant"
+          >Añadir Participante/es (Opcional)</label>
+        <div class="participant">
+          <img
+            src="/icons/icon-users.svg"
+            alt="Participantes icono"
+            class="icon"
+          />
+          <input
+            type="text"
+            id="participant"
+            name="participants"
+            class="input-participant"
+            placeholder="Nombre o email del participante"
+          />
+        </div>
+        <span class="error" id="participantError"></span>
+      </div>
+      <div class="form-group">
+        <label for="repeat" class="label-repeat"
+          >¿Cuando se repiten tus notificaciones?</label>
+          <div class="frequency-container">
+            <div class="frequency-buttons" data-frequency>
+              <button type="button" class="freq-btn" data-value="0">No repetir</button>
+              <button type="button" class="freq-btn" data-value="1">Diaria</button>
+              <button type="button" class="freq-btn" data-value="2">Semanal
+                <img src="/icons/icon-arrow.svg" alt="Arrow icono" class="icon" /></button>
+              <button type="button" class="freq-btn" data-value="3">Mensual
+                <img src="/icons/icon-arrow.svg" alt="Arrow icono" class="icon" />
+              </button>
+              <button type="button" class="freq-btn" data-value="4">Anual</button>
+            </div>
+    
+            <div id="weekly-options" class="frequency-options">
+              <p>Seleccionar días de la semana se repite (puedes elegir varios días)</p>
+              <div class="week-days">
+                <button type="button" class="day-btn" data-value="1">L</button>
+                <button type="button" class="day-btn" data-value="2">M</button>
+                <button type="button" class="day-btn" data-value="3">X</button>
+                <button type="button" class="day-btn" data-value="4">J</button>
+                <button type="button" class="day-btn" data-value="5">V</button>
+              </div>
+              <p>Elige cada cuantas semanas se repite</p>
+              <div class="week-frequency">
+                <button type="button" class="freq-btn" data-value="1">1</button>
+                <button type="button" class="freq-btn" data-value="2">2</button>
+                <button type="button" class="freq-btn" data-value="3">3</button>
+              </div>
+            </div>
+            <div id="monthly-options" class="frequency-options">
+                <p>Seleccionar cuando se repite (Día del mes laborable)</p>
+                <div class="monthly-options">
+                    <button type="button" class="monthly-option" data-value="1">Día seleccionado</button>
+                    <button type="button" class="monthly-option" data-value="2">1er día</button>
+                    <button type="button" class="monthly-option" data-value="3">2° día</button>
+                    <button type="button" class="monthly-option" data-value="4">3er día</button>
+                    <button type="button" class="monthly-option" data-value="5">Antepenúltimo día</button>
+                    <button type="button" class="monthly-option" data-value="6">Penúltimo día</button>
+                    <button type="button" class="monthly-option" data-value="7">Último día</button>
+                </div>
+            </div>
+        </div>
+        <span class="error" id="repeatError"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="label-description"> Descripción </label>
+        <textarea
+          id="description"
+          name="description"
+          class="text-description"
+          placeholder="Escribe lo que necesites que te recordemos, ya sea una tarea, reunión, evento, etc."
+          required></textarea>
+          <span class="text-optional">Campo obligatorio</span>
+        <span class="error" id="descriptionError"></span>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" id="cancelBtn" class="cancel-btn">Cancelar</button>
+        <button type="submit" id="submit-btn" class="submit-btn">Crear Recordatorio</button>
+      </div>
+      <span id="formError" class="error"></span>
+    </form>
+  </div>
+</div>
+
+<script type="module" is:inline src="/src/utils/openReminderForm.js"></script>
+<script type="module" is:inline src="/src/utils/validationForm.js"></script>
+<script type="module" is:inline src="/src/services/handleFormSubmit.js"></script>
+<script type="module" is:inline src="/src/utils/frecuencySelect.js"></script>
+
+<style>
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(218, 218, 218, 0.815);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal.is-active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: #fefefe;
+    border-radius: 16px;
+    width: 600px;
+    height: auto;
+    box-shadow: 0px 1px 2px 0px rgba(41, 79, 84, 0.21);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px; 
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #566E73;
+    font-family: var(--font-montserrat);
+  }
+
+  .label-participant,
+  .label-repeat,
+  .label-description {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #207881;
+    font-family: var(--font-montserrat);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .header-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1F636B;
+    line-height: 16px;
+  }
+
+  .error {
+    color: red;
+    font-size: 10px;
+  }
+
+  .form-group-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    background: #EDF0F1;
+    border-radius: 4px;
+  }
+
+  .form-group-date {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .form-group-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background: #fefefe;
+    border-radius: 4px;
+    box-sizing: border-box;
+    flex-grow: 1;
+  }
+
+  .form-group-reminder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .form-group-calendar {
+    width: 100%;
+    border-radius: 4px;
+  }
+
+  .input-date {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    background: #fefefe;
+    font-size: 14px;
+    font-weight: 500;
+    color: #207881;
+    appearance: none;
+    border: 1px solid rgb(237, 240, 241);
+    font-family: var(--font-montserrat);
+    cursor: pointer;
+  }
+
+  .input-date:invalid {
+    color: #ADCBCC;
+  }
+
+  #dayEnd {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("icons/icon-arrow.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  #dayStar{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("icons/icon-arrow.svg");
+    background-repeat: no-repeat;
+    background-position: left 230px center;
+  }
+  .custom-date-picker {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 13px;
+    margin-top: 8px;
+  }
+
+  .text-date {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-family: var(--font-montserrat);
+    font-weight: 500;
+    line-height: 16px;
+    color: #566E73;
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+
+  #end {
+    margin-right: 180px;
+  }
+
+  #start {
+    margin-left: 5px;
+  }
+  .input-date::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .input-time {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    background: #fefefe;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2C97A0;
+    appearance: none;
+    border: none;
+    font-family: var(--font-montserrat);
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("icons/icon-arrow.svg");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+
+  .input-time:invalid {
+    color: #ADCBCC;
+  }
+  .custom-time-picker {
+    position: relative;
+    display: flex;
+    margin-top: 11px;
+  }
+
+  .input-time::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .participant {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    align-self: stretch;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 4px;
+    background: #EDF0F1;
+    box-sizing: border-box;
+  }
+
+  .input-participant {
+    border-radius: 4px;
+    background: #fefefe;
+    width: 100%;
+    font-size: 14px;
+    color: #207881;
+    font-weight: 500;
+    line-height: 24px;
+    padding: 8px;
+    border: none;
+    font-family: var(--font-montserrat);
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .input-participant::placeholder {
+    color: #d7dfe0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: var(--font-montserrat);
+  }
+
+  .input-title {
+    border-radius: 4px;
+    background: #fefefe;
+    width: 100%;
+    padding: 8px;
+    font-size: 18px;
+    color: #2c97a0;
+    font-weight: 600;
+    border: none;
+    box-sizing: border-box;
+    font-family: var(--font-montserrat);
+  }
+  .input-title::placeholder {
+    color: #2c97a0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 32px;
+    font-family: var(--font-montserrat);
+    opacity: 0.4;
+  }
+  .frequency-container {
+    padding: 16px 0px 0px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .frequency-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%; 
+  }
+
+  .frequency-buttons button {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 8px 4px;
+    line-height: 20px;
+    font-family: var(--font-montserrat);
+    border-radius: 4px;
+    border: 1px solid #D7DFE0;
+    background: #FEFEFE;
+    color: #6B888C;
+    display: flex;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    flex: 1 0 0;
+    margin-right: 0;
+    opacity: 0.8;
+  }
+
+  .frequency-buttons button.active {
+    background: #D3E3E4;
+    color: #1F636B;
+    font-weight: 500;
+  }
+
+  .freq-btn {
+    padding: 8px 16px;
+    border: none;
+    background: #EAF1F2;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #45B5BC;
+    margin-right: 8px;
+  }
+
+  .freq-btn.active {
+    background: #2C97A0;
+    color: #EAF1F2;
+    border: none;
+  }
+
+  .icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-left: 8px; 
+    width: 20px;
+    height: 20px;
+  }
+
+  .freq-btn.expanded .icon {
+    transform: rotate(90deg);
+  }
+
+  .frequency-options {
+    display: none;
+    padding: 12px 0px 0px;
+    font-family: var(--font-montserrat);
+  }
+
+  .frequency-options.visible {
+    display: block;
+  }
+
+  .frequency-options p {
+    color: #207881;
+    font-size: 14px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    font-family: var(--font-montserrat);
+  }
+
+  .week-days, .week-frequency {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  #weekly-options button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    width: 32px;
+    height: 32px;
+    padding: 8px;
+    font-family: var(--font-montserrat);
+  }
+
+  .day-btn {
+    background: #EAF1F2;
+    color: #45B5BC;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    margin-right: 8px;
+  }
+
+  .day-btn.active {
+    background-color: #2C97A0;
+    color: #EAF1F2;
+  }
+
+  .monthly-options {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 8px;
+    width: 100%;
+    justify-content: center; 
+}
+
+.monthly-option {
+  padding: 8px 16px;
+  border: none;
+  background: #EAF1F2;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #45B5BC;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-montserrat);
+  text-align: center;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  white-space: nowrap;
+}
+.monthly-option:nth-child(-n+4) {
+  flex: 1 1 calc(25% - 8px);
+  max-width: calc(25% - 8px);
+}
+
+.monthly-option:nth-child(n+5) {
+  flex: 1 1 calc(33.33% - 8px);
+  max-width: calc(33.33% - 8px);
+}
+
+  .monthly-option.active {
+    background: #2C97A0;
+    color: #EAF1F2;
+  }
+
+  .text-description {
+    width: 100%;
+    height: 100px;
+    border-radius: 4px;
+    margin-top: 10px;
+    background: #fefefe;
+    font-size: 14px;
+    color: #2C97A0;
+    font-weight: 400;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    border: 1px solid #edf0f1;
+    font-family: var(--font-montserrat);
+  }
+
+  .text-optional {
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #B3C3C6;
+    font-family: var(--font-montserrat);
+  }
+
+  .text-description::placeholder {
+    color: #d7dfe0;
+    font-size: 14px;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 30px;
+  }
+
+  .form-actions button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    font-family: var(--font-montserrat);
+    flex: 1 0 0;
+  }
+
+  .submit-btn {
+    background: #1f636b;
+    color: #fafafa;
+    cursor: pointer;
+  }
+
+  .cancel-btn {
+    background: #9BB0B3;
+    color: #D7DFE0;
+    cursor: pointer;
+  }
+</style>

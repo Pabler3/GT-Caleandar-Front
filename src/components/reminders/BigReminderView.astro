@@ -1,0 +1,250 @@
+---
+interface Props {
+  status:string;
+  taskName:string;
+  description:string;
+  numberParticipants:[];
+  hourTask:string;
+  periodicidad:string;
+  dateTask:Date;
+  endDate:Date;
+}
+
+---
+<div class="view-content hidden" id="big-reminderview">
+  <div class="view-header">
+    <h1 id="viewTitle" class="view-title" aria-label="Cerrar">
+      Recordatorio
+    </h1>
+    <!-- <button class="close-btn" aria-label="Cerrar">
+      <img src="/icons/icon-close.svg" alt="Cerrar" class="icon" />
+    </button> -->
+  </div>
+  <div class="view-task-details">
+    <div class="title-content">
+      <p class="status-reminder">Pendiente</p>
+      <div class="task-title">
+        <p>Recordar ingreso de empleado</p>
+      </div>
+      <div class="task-date">
+        <p>29 Oct 2024 - 08 nov 2024</p>
+        <p class="hour">09:00</p>
+      </div>
+    </div>
+    <div class="participant">
+      <img
+        src="/icons/icon-users.svg"
+        alt="Participantes icono"
+        class="icon"
+      />
+      <div class="participants">
+        sandraLopez@leanmind.com    juanL@leanmind.com
+      </div>
+    </div>
+    <label class="label-frecuency">
+      Repetición de notificaciones
+    </label>
+    <div class="frecuency">
+      <img 
+        src="/icons/icon-repeat.svg" 
+        class="icon"
+        alt="Alerta icono"  
+      />
+      <div class="frecuency-text">
+        <p>De Lunes a viernes</p>
+      </div> 
+    </div>
+    <div class="description">
+      <p>LLevar al evento todo lo necesario para gestionar nuestra actividad empresarial.
+        LLamar a Juan Luis Morales.
+      </p>
+    </div>
+    <div class="delete-reminder">
+      <button class="text-archivar" id="btn-archivar">
+        Archivar
+      </button>
+      <button class="text-editar" id="btn-editar">
+        Editar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module" is:inline src="/src/utils/validationViewReminder.js"></script>
+<script type="module" is:inline src="/src/utils/openReminderView.js"></script>
+
+<style>
+ .view-content {
+    background: #fefefe;
+    border-radius: 16px;
+    width: 590px;
+    height: 490px;
+    box-shadow: 0px 1px 2px 0px rgba(41, 79, 84, 0.21);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px; 
+  }
+  /* .hidden {
+    display: none;
+  } */
+  .status-reminder {
+    color: #D65D63;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-align: end;
+    padding-right: 10px;
+    font-size: 18px;
+  }
+  .view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .view-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #026c7a;
+    line-height: 16px;
+  }
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .view-task-details {
+    display: flex;
+    flex-direction: column;
+  }
+  .title-content {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    border: 1px solid #edf0f1;
+  }
+  .task-title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #45b5bc;
+    text-align: left;
+    padding-left: 10px;
+    background-color: #fefefe;
+  }
+  .task-date {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #fefefe;
+    padding-left: 10px;
+  }
+  .task-date p {
+    font-size: 16px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #207881;
+  }
+  .hour {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #207881;
+    padding-right: 10px;
+  }
+  .label-participant,
+  .label-frecuency,
+  .label-description {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    color: #207881;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .participant,
+  .frecuency {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+    border-radius: 4px;
+    padding-left: 10px;
+    border: none;
+  }
+  .frecuency {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #edf0f1;
+  }
+  .participants {
+    width: 100%;
+    margin: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 16px;
+    color: #207881;
+    background-color: #fefefe;
+    border: 1px solid #edf0f1;
+  }
+  .frecuency-text {
+    width: 100%;
+    padding: 4px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 32px;
+    font-weight: 600;
+    color: #45b5bc;
+    margin: 8px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fefefe;
+  }
+  .description {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 8px;
+    text-align: left;
+    font-size: 16px;
+    color: #1f636b;
+  } 
+  .description p {
+    padding-bottom: 15px;
+  }
+  .text-editar,
+  .text-archivar {
+    width: 40%;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #9bb0b3;
+    letter-spacing: 0.8px;
+    border:solid 1px #9bb0b3;
+    border-radius: 8px;
+    padding: 6px;
+  }
+  .delete-reminder {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    gap: 20px;
+  }
+  button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+  }
+</style>

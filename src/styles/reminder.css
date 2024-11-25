@@ -1,0 +1,297 @@
+.reminder__container {
+  width: 100%;
+  padding: .5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.reminder-header__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.reminder-top-header {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+}
+.reminder-text__container {
+  font-family: var(--font-monserrat);
+}
+.reminder-text__container h1{
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-alt);
+  line-height: 24px;
+}
+.reminder-text__container span{
+  font-weight: 400;
+  font-size: .9rem;
+  line-height: 24px;
+  color: var(--color-text-muted);
+}
+.reminder-bottom-header {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+
+}
+.reminder-bottom-header-left {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  
+}
+.reminder-bottom-header-left span{
+  font-family: var(--font-monserrat);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 20px;
+  text-align: center;
+  margin-right: 5px;
+}
+.reminder-bottom-header-left button{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  font-family: var(--font-monserrat);
+  font-weight: 500;
+  font-size: .8rem;
+  line-height: 16px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--bg-color-primary-alt);
+  background-color: #FAFAFA;
+  color: #364244;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s ease-in;
+  width: 100%;
+}
+
+.reminder-bottom-header-left button:hover{
+  background-color: #2C97A0;
+  color: #FAFAFA; 
+}
+
+.filter-button.active {
+  background-color: #4C797D;
+  color: #FAFAFA;
+  border: 1px solid #80AEB0;
+}
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.reminder-bottom-header-right {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+}
+.reminder-bottom-header-right button{
+  font-family: var(--font-monserrat);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #D7DFE0;
+  padding: 8px;
+  cursor: pointer;
+}
+.reminder-bottom-header-right button:hover{
+  background-color: rgb(207, 207, 207);
+}
+.reminder-body__section {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.reminder-body-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.reminder-body-header .reminder-body-header-title{
+  font-family: var(--font-monserrat);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: #207881;
+}
+.reminder-body-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+.arrow-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.arrow-buttons button{
+  height: 24px;
+  width: 24px;
+  border-radius: 4px;
+  border: 1px solid #B3C3C6;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.arrow-buttons button:hover{
+  background-color: rgb(207, 207, 207);
+}
+.yesterday-button {
+  background-color: #39B3C2;
+  padding: 4px 12px;
+  border: 1px solid #82D6DE;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  font-family: var(--font-monserrat);
+  line-height: 20px;
+  font-size: 14px;
+}
+.yesterday-button:hover{
+  background-color: rgb(57, 179, 194, 0.5);
+}
+.full-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #207881;
+  padding: 2px 12px;
+  border-radius: 2px;
+  font-family: var(--font-monserrat);
+  font-weight: 600;
+  color: white;
+  width: 100%;
+}
+.full-control-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+.reminder-body{
+  background-color: #B3C3C6;
+  border-radius: 8px;
+  padding: 24px 2rem;
+}
+
+.small-reminder {
+    width: 300px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fefefe;
+    border-radius: 16px;
+    border: 1px solid rgb(185, 203, 206);
+  }
+  .content-reminder {
+    width: 90%;
+    height: 90%;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    margin: 20px;
+  }
+  .header-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+  }
+  .status-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #F0DB68;
+    margin-right: 60px;
+  }
+  .status-text {
+    font-size: 18px;
+    color: #D65D63;
+    font-weight: 600;
+    margin-left: 60px;
+  }
+  .task-name h3 {
+    font-size: 19px;
+    color: #2b9eaf;
+    margin-bottom: 0;
+    line-height: 16px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+  }
+  .task-name {
+    font-size: 16px;
+    color: #9bb0b3;
+    margin-top: 0;
+    letter-spacing: 0.8px;
+  }
+  .task-details {
+    margin: 0 auto;
+    display: flex;
+    border: none;
+    border-radius: 10px;
+    padding: 4px;
+    gap: 40px;
+  }
+  .participants {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-left: 30px;
+  }
+  .time-reminder {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-right: 30px;
+  }
+  .hour,
+  .number-participants {
+    color: #2b9eaf;
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .text-editar,
+  .text-archivar {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+    color: #9bb0b3;
+    border: solid 1px #D3E3E4;
+    border-radius: 8px;
+    letter-spacing: 0.8px;
+  }
+  .delete-reminder {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  button {
+    width: 90px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    padding: 4px 10px;
+  }
