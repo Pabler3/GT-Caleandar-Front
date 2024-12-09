@@ -1,13 +1,13 @@
 # GT-Caleandar-Front
 
 ## **Descripción**
+Proyecto desarrollado en la segunda edición de los grupos de trabajo de Adopta Un Junior por el grupo caLEANdar. 
 
-Se crea aplicación de recordatorio de tareas utilizando el framework de Astro. El objetivo de la aplicación es generar recordatorios de tareas
+Se trata de una aplicación de recordatorio de tareas utilizando el framework de Astro. El objetivo de la aplicación es generar recordatorios de tareas
 sucesivas o puntuales y cuyo aviso llegue al Email.
+ 
+![Home-caLEANdar](https://github.com/user-attachments/assets/ea649678-fa76-4cf9-b15c-3371e078b78f)
 
-## Nota
-
-Por el momento el branch actualizado es **develop**. Asi que cualquier cambio, se sugiere hacerlo creando una nueva rama a partir de este y luego crear un pull request.
 
 ## **Tecnologías Usadas**
 
@@ -57,8 +57,17 @@ No olvide editar las variables de entorno.
 
 Enlace al [Figma](https://www.figma.com/design/3E8lMjiyFPXelSLD3VR9Na/Mp1-mpv2-caLEANdar?node-id=7008-27609&t=pfFlXWulTPsGwTkG-1) del proyecto.
 
+## Contribuciones
+
+Inicialmente el equipo que ha realizado este proyecto ha sido: 
+
+- Diseño UX/UI: Cristina Pozo Lizaur y Cecilia Mena Sandoval Angulo
+- Frontend: Pablo Arcas Roldán, Lucia Mejia y Joams Mogro Gomez
+- Backend: Jorge Jesus Guillen Villalba
+- Ciberseguridad: Javier Toledo Mendoza
+
+Puedes contribuir al proyecto pero debes tener en cuenta que para cualquier cambio, se sugiere hacerlo creando una nueva rama a partir de este y luego crear un pull request.
 
 ## **Licencia**
 
 Este proyecto está bajo la Licencia MIT.
-
